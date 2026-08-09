@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.ExcursionDetails"
+    android:background="@color/Background"
+    android:layout_margin="24dp">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/Background"
+                android:padding="8dp"
+                android:text="Back"
+                android:textColor="@color/Text"
+                app:icon="@drawable/arrow_small_left"
+                app:iconGravity="start"
+                app:iconTint="@color/Text"/>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <ImageButton
+                android:id="@+id/btnOptions"
+                android:layout_width="38dp"
+                android:layout_height="48dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/menu_dots_vertical"
+                app:tint="@color/Text"
+                app:backgroundTint="@color/Background"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/vacationDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_black"
+            android:text="@string/excursion_details_title"
+            android:textColor="@color/Text"
+            android:textSize="32sp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@null"/>
+
+        <EditText
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/montserrat_bold"
+            android:hint="Excursion Title"
+            android:textColor="@color/Text"
+            android:textSize="26sp"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@null"/>
+
+        <EditText
+            android:id="@+id/dateStartText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Date Start"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="18sp"
+            android:textColor="@color/Text"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="@null"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnSeeAllExc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:text="See All Excursions"
+        android:backgroundTint="@color/Accent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

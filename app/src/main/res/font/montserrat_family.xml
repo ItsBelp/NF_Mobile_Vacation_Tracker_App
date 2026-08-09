@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--  Montserrat Heading  -->
+    <font
+        android:fontWeight="900"
+        android:fontStyle="normal"
+        android:font="@font/montserrat_black"
+        />
+
+    <!--  Montserrat Heading Italic  -->
+    <font
+        android:fontWeight="900"
+        android:fontStyle="italic"
+        android:font="@font/montserrat_blackitalic"
+        />
+
+    <!--  Montserrat Sub Heading 1, 2, 3, bold  -->
+    <font
+        android:fontWeight="400"
+        android:fontStyle="normal"
+        android:font="@font/montserrat_bold"
+        />
+
+    <!--  Montserrat Regular  -->
+    <font
+        android:fontWeight="400"
+        android:fontStyle="normal"
+        android:font="@font/montserrat_regular"
+        />
+
+    <!--  Montserrat Regular Italic  -->
+    <font
+        android:fontWeight="400"
+        android:fontStyle="normal"
+        android:font="@font/montserrat_italic"
+        />
+
+
+</font-family>
