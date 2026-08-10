@@ -48,9 +48,21 @@
         <activity
             android:name=".UI.ExcursionList"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"
             android:label="Excursion List"
-            android:parentActivityName=".UI.ExcursionDetails"/>
+            android:parentActivityName=".UI.ExcursionDetails"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".UI.VacationSearch"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable"/>
+        </activity>
+
     </application>
 
 </manifest>
