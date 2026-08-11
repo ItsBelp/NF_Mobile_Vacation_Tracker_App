@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -45,9 +46,18 @@ public class VacationList extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        SearchView searchBar = findViewById(R.id.searchBar); // Open search activity to search through vacations
+        searchBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(VacationList.this, VacationSearch.class);
+                startActivity(intent);
+            }
+        });
+
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         repository = new VacationRepository(getApplication());
-        List<Vacations> allVacations = repository.getmAllVacations();
         vacationAdapter = new VacationAdapter(this);
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

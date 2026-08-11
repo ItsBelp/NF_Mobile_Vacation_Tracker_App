@@ -49,6 +49,7 @@ dependencies {
     implementation(libs.recyclerview)
     implementation(libs.room.common.jvm)
     implementation(libs.room.runtime)
+    implementation("com.facebook.shimmer:shimmer:0.5.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(libs.ext.junit)

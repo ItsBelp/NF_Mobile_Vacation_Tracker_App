@@ -22,9 +22,13 @@ public interface VacationDAO {
     @Delete
     void delete(Vacations vacations);
 
-    @Query("SELECT * FROM VACATIONS ORDER BY vacationID ASC")
+    @Query("SELECT * FROM vacations ORDER BY vacationID ASC")
     List<Vacations> getAllVacations();
 
     @Query("SELECT * FROM vacations WHERE vacationID = :id")
     Vacations getVacationByID(int id);
+
+    @Query("SELECT * FROM vacations WHERE vacationTitle LIKE '%' || :query || '%' " +
+            "OR vacationHotel LIKE '%' || :query || '%' ")
+    List<Vacations> searchVacations(String query);
 }

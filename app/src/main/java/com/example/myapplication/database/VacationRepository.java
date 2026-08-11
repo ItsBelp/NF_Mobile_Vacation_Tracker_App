@@ -42,6 +42,19 @@ public class VacationRepository {
         return mAllVacations;
     }
 
+    public List<Vacations>searchVacations(String query) {
+        databaseExecutor.execute(()-> {
+            mAllVacations = mVacationDAO.getAllVacations();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mAllVacations;
+    }
+
     public Vacations getVacationByID(int id) {
         databaseExecutor.execute(() -> {
             currentVacation = mVacationDAO.getVacationByID(id);
