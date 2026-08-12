@@ -44,7 +44,7 @@ public class VacationRepository {
 
     public List<Vacations>searchVacations(String query) {
         databaseExecutor.execute(()-> {
-            mAllVacations = mVacationDAO.getAllVacations();
+            mAllVacations = mVacationDAO.searchVacations(query);
         });
         try {
             Thread.sleep(1000);

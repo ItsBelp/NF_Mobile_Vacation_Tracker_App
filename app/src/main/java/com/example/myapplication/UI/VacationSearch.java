@@ -3,11 +3,11 @@ package com.example.myapplication.UI;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -51,11 +51,22 @@ public class VacationSearch extends AppCompatActivity {
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        Intent intentSearch = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intentSearch.getStringExtra(SearchManager.QUERY);
-            searchQueryMethod(query);
-        }
+        SearchView searchBar = findViewById(R.id.searchBar);
+        searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchQueryMethod(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                searchQueryMethod(newText);
+                return true;
+            }
+        });
+
+        searchBar.requestFocus();
     }
 
     private void searchQueryMethod(String query) {
