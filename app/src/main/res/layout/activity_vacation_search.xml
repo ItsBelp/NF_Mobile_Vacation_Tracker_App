@@ -28,17 +28,13 @@
             app:tint="@color/Text"
             app:iconGravity="start" />
 
-<!--        <SearchView-->
-<!--            android:id="@+id/searchBar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:iconifiedByDefault="false"-->
-<!--            app:layout_constraintStart_toEndOf="@+id/btnBack"-->
-<!--            app:queryHint="@string/search_hint"/>-->
-
-        <com.google.android.material.search.SearchBar
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchBar"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:iconifiedByDefault="false"
+            app:layout_constraintStart_toEndOf="@+id/btnBack"
+            app:queryHint="@string/search_hint"/>
 
     </LinearLayout>
 

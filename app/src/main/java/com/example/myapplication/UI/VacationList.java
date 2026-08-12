@@ -4,12 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,8 +18,8 @@ import com.example.myapplication.database.VacationRepository;
 import com.example.myapplication.entities.Excursion;
 import com.example.myapplication.entities.Vacations;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.search.SearchBar;
 
-import java.util.List;
 
 public class VacationList extends AppCompatActivity {
     private VacationRepository repository;
@@ -39,21 +36,18 @@ public class VacationList extends AppCompatActivity {
             return insets;
         });
         FloatingActionButton fab = findViewById(R.id.floatingActionButton); // Create new Vacation
-        fab.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(VacationList.this, VacationDetails.class);
-                startActivity(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(VacationList.this, VacationDetails.class);
+            startActivity(intent);
         });
 
-        SearchView searchBar = findViewById(R.id.searchBar); // Open search activity to search through vacations
-        searchBar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view){
-                Intent intent = new Intent(VacationList.this, VacationSearch.class);
-                startActivity(intent);
-            }
+        SearchBar searchBar = findViewById(R.id.searchBar); // Open search activity to search through vacations
+        searchBar.setFocusable(false);
+        searchBar.setFocusableInTouchMode(false);
+        searchBar.setClickable(true);
+        searchBar.setOnClickListener(view -> {
+            Intent intent = new Intent(VacationList.this, VacationSearch.class);
+            startActivity(intent);
         });
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);

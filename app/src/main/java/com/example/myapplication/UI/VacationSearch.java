@@ -3,6 +3,7 @@ package com.example.myapplication.UI;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -41,6 +42,8 @@ public class VacationSearch extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        findViewById(R.id.btnBack).setOnClickListener(v -> finish()); // create new Listener for custom menu button
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         repository = new VacationRepository(getApplication());
