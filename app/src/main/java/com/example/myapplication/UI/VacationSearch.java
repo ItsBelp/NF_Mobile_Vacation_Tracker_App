@@ -2,10 +2,13 @@ package com.example.myapplication.UI;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -21,6 +24,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.database.VacationRepository;
 import com.example.myapplication.entities.Vacations;
 import com.facebook.shimmer.ShimmerFrameLayout;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -56,6 +61,8 @@ public class VacationSearch extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         repository = new VacationRepository(getApplication());
         vacationAdapter = new VacationAdapter(this);
+        ImageView magNotFound = findViewById(R.id.magNotFound);
+        TextView searchNotFound = findViewById(R.id.searchNotFound);
         recyclerView.setAdapter(vacationAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -65,6 +72,8 @@ public class VacationSearch extends AppCompatActivity {
             public boolean onQueryTextSubmit(String query) {
                 searchHandler.removeCallbacks(searchRunnable);
                 showShimmer();
+                magNotFound.setVisibility(View.GONE);
+                searchNotFound.setVisibility(View.GONE);
                 searchQueryMethod(query);
                 searchBar.clearFocus();
                 return true;
@@ -75,6 +84,8 @@ public class VacationSearch extends AppCompatActivity {
                 if (searchRunnable != null) {
                     searchHandler.removeCallbacks(searchRunnable);
                 }
+                magNotFound.setVisibility(View.GONE);
+                searchNotFound.setVisibility(View.GONE);
                 showShimmer();
                 searchRunnable = () -> searchQueryMethod(newText);
                 searchHandler.postDelayed(searchRunnable, 300);
@@ -88,15 +99,22 @@ public class VacationSearch extends AppCompatActivity {
     private void searchQueryMethod(String query) {
         new Thread(() -> {
             List<Vacations> results = repository.searchVacations(query);
+            ImageView magNotFound = findViewById(R.id.magNotFound);
+            TextView searchNotFound = findViewById(R.id.searchNotFound);
+            RecyclerView recyclerView = findViewById(R.id.recyclerView);
             runOnUiThread(() -> {
-                vacationAdapter.setVacations(results);
-                hideShimmer();
+                if (results.isEmpty()) {
+                    magNotFound.setVisibility(View.VISIBLE);
+                    searchNotFound.setVisibility(View.VISIBLE);
+                    shimmerContainer.stopShimmer();
+                    shimmerContainer.setVisibility(View.GONE);
+                    recyclerView.setVisibility(View.GONE);
+                } else {
+                    vacationAdapter.setVacations(results);
+                    hideShimmer();
+                }
             });
         }).start();
-//        if (results.isEmpty()) {
-//            Toast.makeText(this, "No Vacations Found For: " + query, Toast.LENGTH_SHORT).show();
-//        }
-//        vacationAdapter.setVacations(results);
     }
 
     private void showShimmer() {
