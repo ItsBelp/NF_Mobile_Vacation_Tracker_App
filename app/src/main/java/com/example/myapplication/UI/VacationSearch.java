@@ -3,6 +3,9 @@ package com.example.myapplication.UI;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,14 +20,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.myapplication.R;
 import com.example.myapplication.database.VacationRepository;
 import com.example.myapplication.entities.Vacations;
+import com.facebook.shimmer.ShimmerFrameLayout;
 
 import java.util.List;
 
 public class VacationSearch extends AppCompatActivity {
 
     private VacationRepository repository;
-
+    private Handler searchHandler = new Handler(Looper.getMainLooper());
+    private Runnable searchRunnable;
     VacationAdapter vacationAdapter;
+    ShimmerFrameLayout shimmerContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,8 @@ public class VacationSearch extends AppCompatActivity {
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish()); // create new Listener for custom menu button
 
+        shimmerContainer = findViewById(R.id.shimmerContainer);
+        shimmerContainer.setVisibility(View.VISIBLE);
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         repository = new VacationRepository(getApplication());
         vacationAdapter = new VacationAdapter(this);
@@ -55,13 +63,21 @@ public class VacationSearch extends AppCompatActivity {
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchHandler.removeCallbacks(searchRunnable);
+                showShimmer();
                 searchQueryMethod(query);
+                searchBar.clearFocus();
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                searchQueryMethod(newText);
+                if (searchRunnable != null) {
+                    searchHandler.removeCallbacks(searchRunnable);
+                }
+                showShimmer();
+                searchRunnable = () -> searchQueryMethod(newText);
+                searchHandler.postDelayed(searchRunnable, 300);
                 return true;
             }
         });
@@ -70,10 +86,35 @@ public class VacationSearch extends AppCompatActivity {
     }
 
     private void searchQueryMethod(String query) {
-        List<Vacations> results = repository.searchVacations(query);
-        if (results.isEmpty()) {
-            Toast.makeText(this, "No Vacations Found For: " + query, Toast.LENGTH_SHORT).show();
-        }
-        vacationAdapter.setVacations(results);
+        new Thread(() -> {
+            List<Vacations> results = repository.searchVacations(query);
+            runOnUiThread(() -> {
+                vacationAdapter.setVacations(results);
+                hideShimmer();
+            });
+        }).start();
+//        if (results.isEmpty()) {
+//            Toast.makeText(this, "No Vacations Found For: " + query, Toast.LENGTH_SHORT).show();
+//        }
+//        vacationAdapter.setVacations(results);
     }
+
+    private void showShimmer() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        if (recyclerView != null && shimmerContainer != null) {
+            recyclerView.setVisibility(View.GONE);
+            shimmerContainer.setVisibility(View.VISIBLE);
+            shimmerContainer.startShimmer();
+        }
+    }
+
+    private void hideShimmer() {
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        if (shimmerContainer != null && recyclerView != null) {
+            shimmerContainer.stopShimmer();
+            shimmerContainer.setVisibility(View.GONE);
+            recyclerView.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

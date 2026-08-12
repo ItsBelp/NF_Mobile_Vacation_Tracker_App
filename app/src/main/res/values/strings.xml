@@ -6,6 +6,7 @@
 
     <string name="vacation_list_title">Vacation List</string>
     <string name="search_hint">Search</string>
+    <string name="search_vacation">Search Vacations...</string>
     <string name="vacation_list_subtitle">Here is your current list of vacations.</string>
     <string name="card_title">Vacation Country</string>
 

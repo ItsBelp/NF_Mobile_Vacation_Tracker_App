@@ -8,6 +8,33 @@
     tools:context=".UI.VacationSearch"
     android:layout_margin="28dp">
 
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        app:layout_constraintTop_toTopOf="@id/recyclerView">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+            <include layout="@layout/vacation_skeleton_item"/>
+
+        </LinearLayout>
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
     <LinearLayout
         android:id="@+id/materialSearchBar"
         android:layout_width="match_parent"
@@ -34,7 +61,7 @@
             android:layout_height="wrap_content"
             app:iconifiedByDefault="false"
             app:layout_constraintStart_toEndOf="@+id/btnBack"
-            app:queryHint="@string/search_hint"/>
+            app:queryHint="@string/search_vacation"/>
 
     </LinearLayout>
 
@@ -52,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@+id/divider"
         app:layout_constraintStart_toStartOf="parent"/>
 
