@@ -3,6 +3,6 @@
 
     <item android:title="Add Sample Code"
         android:id="@+id/sample"/>
-    <item android:title="Item"
-        android:id="@+id/item"/>
+    <item android:title="Generate CSV"
+        android:id="@+id/reportCSV"/>
 </menu>

@@ -195,17 +195,6 @@ public class VacationDetails extends AppCompatActivity {
             } else {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
             }
-//            long testTime = System.currentTimeMillis() + 10000;
-//
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-//                if (alarmManager.canScheduleExactAlarms()) {
-//                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, testTime, pendingIntent);
-//                } else {
-//                    alarmManager.set(AlarmManager.RTC_WAKEUP, testTime, pendingIntent);
-//                }
-//            } else {
-//                alarmManager.setExact(AlarmManager.RTC_WAKEUP, testTime, pendingIntent);
-//            }
             Toast.makeText(this, "Alert set for " + dateString, Toast.LENGTH_SHORT).show();
         } catch (ParseException e) {
             Toast.makeText(this, "No Alert Set", Toast.LENGTH_SHORT).show();

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.graphics.Insets;
@@ -118,7 +119,7 @@ public class VacationSearch extends AppCompatActivity {
         searchBar.requestFocus();
     }
 
-    public String enforceMaxLength(String input) {
+    public String enforceMaxLength(@NonNull String input) {
         if (input.length() > maxSearchLength) {
             return input.substring(0, maxSearchLength);
         }

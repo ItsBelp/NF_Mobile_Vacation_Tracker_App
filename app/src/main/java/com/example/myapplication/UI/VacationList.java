@@ -1,12 +1,20 @@
 package com.example.myapplication.UI;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -19,6 +27,11 @@ import com.example.myapplication.entities.Excursion;
 import com.example.myapplication.entities.Vacations;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.search.SearchBar;
+
+import java.io.File;
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class VacationList extends AppCompatActivity {
@@ -39,6 +52,13 @@ public class VacationList extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(VacationList.this, VacationDetails.class);
             startActivity(intent);
+        });
+        ImageButton btnOptions = findViewById(R.id.btnOptions);
+        btnOptions.setOnClickListener(view -> {
+            PopupMenu popupOptions = new PopupMenu(this, view);
+            popupOptions.getMenuInflater().inflate(R.menu.menu_vacation_list, popupOptions.getMenu());
+            popupOptions.setOnMenuItemClickListener(item -> onOptionsItemSelected(item));
+            popupOptions.show();
         });
 
         SearchBar searchBar = findViewById(R.id.searchBar); // Open search activity to search through vacations
@@ -71,22 +91,58 @@ public class VacationList extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
-        if (item.getItemId() == R.id.sample){ //Hard insert sample data to test repository
-            repository = new VacationRepository(getApplication());
-            Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/2027", "04/27/2027");
-            repository.insert(vacation);
-            vacation = new Vacations(0,"Britain", "The Yorkshire", "06/02/2026", "06/08/2026");
-            repository.insert(vacation);
-            Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/2027", 1);
-            repository.insert(excursion);
-            excursion = new Excursion(0, "Double Decker Bus Tour", "06/03/2026", 2);
-            repository.insert(excursion);
+//        if (item.getItemId() == R.id.sample){ //Hard insert sample data to test repository
+//            repository = new VacationRepository(getApplication());
+//            Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/2027", "04/27/2027");
+//            repository.insert(vacation);
+//            vacation = new Vacations(0,"Britain", "The Yorkshire", "06/02/2026", "06/08/2026");
+//            repository.insert(vacation);
+//            Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/2027", 1);
+//            repository.insert(excursion);
+//            excursion = new Excursion(0, "Double Decker Bus Tour", "06/03/2026", 2);
+//            repository.insert(excursion);
+//            return true;
+//        }
+        if (item.getItemId() == R.id.reportCSV) {
+            generateReport();
             return true;
         }
         if (item.getItemId() == android.R.id.home){
             this.finish();
             return true;
         }
-        return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void generateReport() {
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        repository = new VacationRepository(getApplication());
+        executorService.execute(() -> {
+            List<Vacations> allVacations = repository.getmAllVacations();
+            File reportCSV = VacationReportGenerator.generateVacationReport(this, allVacations, repository);
+            mainHandler.post(() -> {
+                if (reportCSV != null && reportCSV.exists() && reportCSV.length() > 0) {
+                    Toast.makeText(this, "Report Generated: " + reportCSV.getName(), Toast.LENGTH_SHORT).show();
+                    shareReport(reportCSV);
+                } else {
+                    Toast.makeText(this, "Failed to generate report", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
+    }
+
+    private void shareReport(File reportFile) {
+        Uri fileUri = FileProvider.getUriForFile(
+                this,
+                getPackageName() + ".fileprovider",
+                reportFile
+        );
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/csv");
+        shareIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+        shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        startActivity(Intent.createChooser(shareIntent, "Export Vacation Report"));
     }
 }
