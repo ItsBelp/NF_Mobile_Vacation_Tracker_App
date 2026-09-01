@@ -6,7 +6,9 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.InputFilter;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +36,7 @@ public class VacationSearch extends AppCompatActivity {
     private VacationRepository repository;
     private Handler searchHandler = new Handler(Looper.getMainLooper());
     private Runnable searchRunnable;
+    public static final int maxSearchLength = 50;
     VacationAdapter vacationAdapter;
     ShimmerFrameLayout shimmerContainer;
 
@@ -67,14 +70,31 @@ public class VacationSearch extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         SearchView searchBar = findViewById(R.id.searchBar);
+        EditText searchEditText = searchBar.findViewById(androidx.appcompat.R.id.search_src_text);
+        if (searchEditText != null) {
+            searchEditText.setFilters(new InputFilter[] {
+                    new InputFilter.LengthFilter(maxSearchLength)
+            });
+        }
+
         searchBar.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            // Add Sanitization regex; remove anything that is not a-z, A-Z, and 0-9, etc.
+            public String sanitizeSearch(String input) {
+                if (input == null) return "";
+                String sanitizedString = input.trim();
+                sanitizedString = sanitizedString.replaceAll("[^a-zA-Z0-9\\s,.-]","");
+                return sanitizedString;
+            }
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchHandler.removeCallbacks(searchRunnable);
                 showShimmer();
                 magNotFound.setVisibility(View.GONE);
                 searchNotFound.setVisibility(View.GONE);
-                searchQueryMethod(query);
+
+                String saniQuery = enforceMaxLength(sanitizeSearch(query));
+                searchQueryMethod(saniQuery);
                 searchBar.clearFocus();
                 return true;
             }
@@ -87,13 +107,22 @@ public class VacationSearch extends AppCompatActivity {
                 magNotFound.setVisibility(View.GONE);
                 searchNotFound.setVisibility(View.GONE);
                 showShimmer();
-                searchRunnable = () -> searchQueryMethod(newText);
+
+                String saniQuery = enforceMaxLength(sanitizeSearch(newText));
+                searchRunnable = () -> searchQueryMethod(saniQuery);
                 searchHandler.postDelayed(searchRunnable, 300);
                 return true;
             }
         });
 
         searchBar.requestFocus();
+    }
+
+    public String enforceMaxLength(String input) {
+        if (input.length() > maxSearchLength) {
+            return input.substring(0, maxSearchLength);
+        }
+        return input;
     }
 
     private void searchQueryMethod(String query) {
