@@ -42,6 +42,32 @@ public class VacationRepository {
         return mAllVacations;
     }
 
+    public List<Vacations>getVacationsAsc(){
+        databaseExecutor.execute(() -> {
+            mAllVacations = mVacationDAO.getVacationsAsc();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mAllVacations;
+    }
+
+    public List<Vacations>getVacationsDesc(){
+        databaseExecutor.execute(() -> {
+            mAllVacations = mVacationDAO.getVacationsDesc();
+        });
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        return mAllVacations;
+    }
+
     public List<Vacations>searchVacations(String query) {
         databaseExecutor.execute(()-> {
             mAllVacations = mVacationDAO.searchVacations(query);

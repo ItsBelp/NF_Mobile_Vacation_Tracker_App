@@ -5,4 +5,8 @@
         android:id="@+id/sample"/>
     <item android:title="Generate CSV"
         android:id="@+id/reportCSV"/>
+    <item android:title="Sort Ascending"
+        android:id="@+id/sortASC"/>
+    <item android:title="Sort Descending"
+        android:id="@+id/sortDESC"/>
 </menu>
