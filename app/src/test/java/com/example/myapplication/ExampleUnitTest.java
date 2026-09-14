@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.myapplication.entities.Excursion;
 import com.example.myapplication.entities.Vacations;
 
 /**
@@ -13,7 +14,7 @@ import com.example.myapplication.entities.Vacations;
  */
 public class ExampleUnitTest {
 
-    // Test Vacation values cannot be null
+    // Test Vacation values cannot be null-------------------------------------------------------------
     @Test
     public void vacationObjectNotNull() {
         Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
@@ -44,10 +45,38 @@ public class ExampleUnitTest {
         assertNotNull(vacation.getEndDate());
     }
 
+
+    // Test Excursion values cannot be null------------------------------------------------------------
     @Test
-    public void vacationIDNotNull() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
-        assertNotNull(vacation.getVacationID());
+    public void excursionObjectNotNull() {
+        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", 1);
+        assertNotNull(excursion);
     }
 
+    @Test
+    public void excursionTitleNotNull() {
+        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", 1);
+        assertNotNull(excursion.getExcTitle());
+    }
+
+    @Test
+    public void excursionDateNotNull() {
+        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", 1);
+        assertNotNull(excursion.getExcDate());
+    }
+
+    // Test Unique ID checks---------------------------------------------------------------------------
+    @Test
+    public void vacationsDiffID() {
+        Vacations vacation1 = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation2 = new Vacations(2, "Britain", "The Yorkshire", "06/02/27", "06/08/27");
+        assertNotEquals(vacation1.getVacationID(), vacation2.getVacationID());
+    }
+
+    @Test
+    public void excursionsDiffID() {
+        Excursion excursion1 = new Excursion(1, "Venice Boat Tour", "04/25/27", 1);
+        Excursion excursion2 = new Excursion(2, "Double Decker Bus Tour", "06/03/27", 2);
+        assertNotEquals(excursion1.getExcID(), excursion2.getExcID());
+    }
 }
