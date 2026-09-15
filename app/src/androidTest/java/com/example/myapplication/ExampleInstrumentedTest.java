@@ -50,19 +50,19 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void checkVacPersist() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
         List<Vacations> allVacations = vacationDAO.getAllVacations();
         assertEquals("Italy", allVacations.get(1).getVacationTitle());
     }
     @Test
     public void checkExcPersist() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        int vacationID = allVacations.get(1).getVacationID();
+        int vacationID = allVacations.get(0).getVacationID();
 
-        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", vacationID);
+        Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/27", vacationID);
         excursionDAO.insert(excursion);
 
         List<Excursion> allExcursions = excursionDAO.getAllExcursions();
@@ -71,45 +71,45 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void checkVacUpdate() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
 
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        Vacations vacation1 = allVacations.get(1);
+        Vacations vacation1 = allVacations.get(0);
 
         Vacations vacation1Edit = new Vacations(vacation1.getVacationID(), "France", "HotelParis", "07/10/27", "07/20/27");
         vacationDAO.update(vacation1Edit);
 
         List<Vacations> updateVacList = vacationDAO.getAllVacations();
-        assertEquals("France", updateVacList.get(1).getVacationTitle());
+        assertEquals("France", updateVacList.get(0).getVacationTitle());
     }
 
     @Test
     public void checkExcUpdate() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        int vacationID = allVacations.get(1).getVacationID();
+        int vacationID = allVacations.get(0).getVacationID();
 
-        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", vacationID);
+        Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/27", vacationID);
         excursionDAO.insert(excursion);
         List<Excursion> allExcursions = excursionDAO.getAllExcursions();
-        Excursion excursion1 = allExcursions.get(1);
+        Excursion excursion1 = allExcursions.get(0);
 
         Excursion exc1Edit = new Excursion(excursion1.getExcID(), "Cheese Tasting", "07/12/27", vacationID);
         excursionDAO.update(exc1Edit);
 
         List<Excursion> updateExcList = excursionDAO.getAllExcursions();
-        assertEquals("Cheese Tasting", updateExcList.get(1).getExcTitle());
+        assertEquals("Cheese Tasting", updateExcList.get(0).getExcTitle());
     }
 
     @Test
     public void checkVacDel() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
 
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        vacationDAO.delete(allVacations.get(1));
+        vacationDAO.delete(allVacations.get(0));
 
         List<Vacations> vacDelList = vacationDAO.getAllVacations();
         assertTrue(vacDelList.isEmpty());
@@ -117,19 +117,54 @@ public class ExampleInstrumentedTest {
 
     @Test
     public void checkExcDel() {
-        Vacations vacation = new Vacations(1, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        int vacationID = allVacations.get(1).getVacationID();
+        int vacationID = allVacations.get(0).getVacationID();
 
-        Excursion excursion = new Excursion(1, "Venice Boat Tour", "04/25/27", vacationID);
+        Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/27", vacationID);
         excursionDAO.insert(excursion);
 
         List<Excursion> allExcursions = excursionDAO.getAllExcursions();
-        excursionDAO.delete(allExcursions.get(1));
+        excursionDAO.delete(allExcursions.get(0));
 
         List<Excursion> excDelList = excursionDAO.getAllExcursions();
         assertTrue(excDelList.isEmpty());
+    }
+
+    @Test
+    public void vacationExcDel() {
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        vacationDAO.insert(vacation);
+        List<Vacations> allVacations = vacationDAO.getAllVacations();
+        int vacationID = allVacations.get(0).getVacationID();
+
+        Excursion excursion = new Excursion(0, "Venice Boat Tour", "04/25/27", vacationID);
+        excursionDAO.insert(excursion);
+
+        List<Excursion> assocExc = excursionDAO.getAssocExcs(vacationID);
+        assertFalse("Vacation has excursions associated with it, and should not deleted!", assocExc.isEmpty());
+    }
+
+    @Test
+    public void vacSearchMatch() {
+        Vacations vacation1 = new Vacations(0, "Italy", "EuroHotel", "04/22/27","04/27/27");
+        Vacations vacation2 = new Vacations(0, "Britain", "The Yorkshire", "06/02/2026", "06/08/2026");
+        vacationDAO.insert(vacation1);
+        vacationDAO.insert(vacation2);
+
+        List<Vacations> searchResult = vacationDAO.searchVacations("Italy");
+        assertEquals(1, searchResult.size());
+        assertEquals("Italy", searchResult.get(0).getVacationTitle());
+    }
+
+    @Test
+    public void vacSearchEmpty() {
+        Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
+        vacationDAO.insert(vacation);
+
+        List<Vacations> searchResult = vacationDAO.searchVacations("Japan");
+        assertTrue(searchResult.isEmpty());
     }
 
 }
