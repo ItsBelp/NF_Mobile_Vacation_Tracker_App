@@ -53,7 +53,7 @@ public class ExampleInstrumentedTest {
         Vacations vacation = new Vacations(0, "Italy", "EuroHotel", "04/22/27", "04/27/27");
         vacationDAO.insert(vacation);
         List<Vacations> allVacations = vacationDAO.getAllVacations();
-        assertEquals("Italy", allVacations.get(1).getVacationTitle());
+        assertEquals("Italy", allVacations.get(0).getVacationTitle());
     }
     @Test
     public void checkExcPersist() {
