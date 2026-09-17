@@ -29,16 +29,8 @@ public class Excursion {
         return excTitle;
     }
 
-    public void setExcTitle(String excTitle) {
-        this.excTitle = excTitle;
-    }
-
     public String getExcDate() {
         return excDate;
-    }
-
-    public void setExcDate(String excDate) {
-        this.excDate = excDate;
     }
 
     public int getVacationID() {

@@ -56,15 +56,6 @@ public class ExcursionDetails extends AppCompatActivity {
         });
 
         findViewById(R.id.btnBack).setOnClickListener(v -> finish()); // create new Listener for custom menu button
-//        Button btnExcList = findViewById(R.id.btnSeeAllExc);
-//
-//        btnExcList.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Intent intent = new Intent(ExcursionDetails.this, ExcursionList.class);
-//                startActivity(intent);
-//            }
-//        });
 
         repository = new VacationRepository(getApplication());
         excursionID = getIntent().getIntExtra("id", -1);

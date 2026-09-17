@@ -21,8 +21,6 @@ public class ExcursionList extends AppCompatActivity {
     private VacationRepository repository;
     ExcursionAdapter excursionAdapter;
 
-    int vacationID;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -35,10 +35,6 @@ public class Vacations {
         return vacationTitle;
     }
 
-    public void setVacationTitle(String vacationTitle) {
-        this.vacationTitle = vacationTitle;
-    }
-
     public String getVacationHotel() {
         return vacationHotel;
     }
@@ -51,15 +47,8 @@ public class Vacations {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
     public String getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
-    }
 }
