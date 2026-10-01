@@ -1,6 +1,6 @@
 # Student Work - SOFTWARE ENGINEERING CAPSTONE
 
-<img src="./assets/AppGif.gif" alt="Demo Gif showcasing simple app features">
+<img src="./assets/AppGif.gif" alt="Demo Gif showcasing simple app features" width="50%">
 
 ## Android Mobile Vacation Tracker 
 This is a multiple-screen application that allows users to Create, Read, Update, and Delete vacation and excursion data. Users can keep track of details such as trip dates and hotel information. This application utilizes a local SQLite Database with the Room Framework. 
