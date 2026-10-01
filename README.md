@@ -1,6 +1,6 @@
 # Student Work - SOFTWARE ENGINEERING CAPSTONE
 
-![Demo Gif showcasing simple app features](./assets/AppGif.gif)
+<img src="./assets/AppGif.gif" alt="Demo Gif showcasing simple app features">
 
 ## Android Mobile Vacation Tracker 
 This is a multiple-screen application that allows users to Create, Read, Update, and Delete vacation and excursion data. Users can keep track of details such as trip dates and hotel information. This application utilizes a local SQLite Database with the Room Framework. 
@@ -28,11 +28,11 @@ Key features include:
 Deployed via Google Play Console Internal Test Track.
 
 ## Media
-![Figma Storyboard of Application](./assets/VacationApp_FigmaStoryboard.png)
-![Screenshort of Vacation List Activity](./assets/Screenshot_VacationList.png)
-![Screenshot of Vacation Details Activity](./assets/Screenshot_VacationDetails.png)
-![Screenshot of Excursion Details Activity](./assets/Screenshot_ExcursionDetails.png)
-![Screenshot of Search Activity with Shimmer Library](./assets/Screenshot_SearchShimmerActivity.png)
+<img src="./assets/VacationApp_FigmaStoryboard.png" alt="Figma Storyboard of Application" width="50%">
+<img src="./assets/Screenshot_VacationList.png" alt="Screenshort of Vacation List Activity" width="50%">
+<img src="./assets/Screenshot_VacationDetails.png" alt="Screenshot of Vacation Details Activity" width="50%">
+<img src="./assets/Screenshot_ExcursionDetails.png" alt="Screenshot of Excursion Details Activity"width="50%">
+<img src="./assets/Screenshot_SearchShimmerActivity.png" alt="Screenshot of Search Activity with Shimmer Library" width="50%">
 
 
 ## Tech Stack
